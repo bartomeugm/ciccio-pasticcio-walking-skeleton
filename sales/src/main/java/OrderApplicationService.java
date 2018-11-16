@@ -1,4 +1,4 @@
-public class OrderApplicationService implements ApplicationService {
+public class OrderApplicationService {
     public String sayHello() {
         return "Hello";
     }

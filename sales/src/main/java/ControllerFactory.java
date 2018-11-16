@@ -1,5 +1,5 @@
 public class ControllerFactory {
-    public Controller create() {
+    public static OrderController orderController() {
         return new OrderController(new OrderApplicationService());
     }
 }

@@ -12,7 +12,7 @@ public class CiccioPasticcioTest {
 
     @Test
     public void verify_order_path_returns_hello() {
-        given().port(4567)
+        given().port(8080)
                 .when().get("/order")
                 .then().body("mensaje", equalTo("Hello"));
     }

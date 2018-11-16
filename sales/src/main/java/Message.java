@@ -1,9 +1,5 @@
 public class Message {
-    String mensaje;
-
-    public String getMensaje() {
-        return mensaje;
-    }
+    private String mensaje;
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;

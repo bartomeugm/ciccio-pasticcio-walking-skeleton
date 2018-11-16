@@ -1,7 +1,7 @@
 import spark.Request;
 import spark.Response;
 
-public class OrderController implements Controller {
+public class OrderController {
 
     OrderApplicationService orderApplicationService;
 
@@ -13,7 +13,7 @@ public class OrderController implements Controller {
         String greeting = orderApplicationService.sayHello();
         Message mensaje = new Message();
         mensaje.setMensaje(greeting);
-        res.header("Content-Type","application/json");
+        res.header("Content-Type", "application/json");
         return mensaje;
     }
 }
