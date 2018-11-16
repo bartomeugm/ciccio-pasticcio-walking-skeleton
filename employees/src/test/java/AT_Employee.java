@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 
 public class AT_Employee {
 
-    ApplicationService applicationService = mock(ApplicationService.class);
+    ApplicationService applicationService = new ApplicationService();
 
     @BeforeEach
     void setUp() {
@@ -37,8 +37,6 @@ public class AT_Employee {
                 .add("photo", "/no_photo.jpg")
                 .add("notes", "")
                 .toString();
-
-        when(applicationService.addEmployee(any())).thenReturn(new EmployeeID(4321));
 
         given()
                 .contentType("application/json")

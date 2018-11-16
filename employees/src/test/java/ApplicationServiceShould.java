@@ -8,7 +8,6 @@ public class ApplicationServiceShould {
     public void fail_if_no_data_provided_on_employee_creation() {
 
         assertThrows(IllegalArgumentException.class, () -> {
-
             new ApplicationService().addEmployee(null);
         });
 
