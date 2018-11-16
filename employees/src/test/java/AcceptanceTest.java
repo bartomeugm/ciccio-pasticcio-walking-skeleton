@@ -1,4 +1,5 @@
 import com.eclipsesource.json.Json;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -6,6 +7,12 @@ import static io.restassured.RestAssured.given;
 public class AcceptanceTest {
 
     // Create an employee
+
+
+    @BeforeEach
+    void setUp() {
+        new EmployeeManagementService().startOn(8080);
+    }
 
     @Test
     public void employee_can_be_created() {
