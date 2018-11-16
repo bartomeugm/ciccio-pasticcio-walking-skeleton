@@ -1,3 +1,4 @@
+import com.codurance.ciccio_pasticcio.Application;
 import org.junit.Before;
 import org.junit.Test;
 
