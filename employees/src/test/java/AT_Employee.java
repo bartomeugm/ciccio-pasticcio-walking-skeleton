@@ -39,6 +39,7 @@ public class AT_Employee {
                 .post("/employees")
         .then()
                 .statusCode(201)
+                .contentType("application/json")
                 .body("uri", equalTo("/employees/1234"));
     }
 }
