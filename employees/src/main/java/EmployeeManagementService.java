@@ -16,12 +16,10 @@ public class EmployeeManagementService {
     public void startOn(int port) {
         Spark.port(port);
         post("/employees", (req, res) -> {
-            res.status(201);
-            res.type("application/json");
-
             EmployeeID employeeID = applicationService.addEmployee(null);
 
-
+            res.type("application/json");
+            res.status(201);
             return Json.object().add("uri", "/employees/"+employeeID.toString()).toString();
         });
     }
