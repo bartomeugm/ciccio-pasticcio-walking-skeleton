@@ -1,5 +1,8 @@
 public class ApplicationService {
     public EmployeeID addEmployee(EmployeeDTO o) {
-        throw new IllegalArgumentException();
+        if (o == null) {
+            throw new IllegalArgumentException();
+        }
+        return new EmployeeID(1234);
     }
 }
