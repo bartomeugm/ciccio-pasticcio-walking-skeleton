@@ -1,7 +1,7 @@
 package com.codurance.ciccio_pasticcio;
 
 public class OrderApplicationService {
-    public OrderApplicationService(Repository orderRepository, Warehouse warehouseAdapter) {
+    public OrderApplicationService(Repository repository, OrderValidator orderValidator) {
     }
 
     public String sayHello() {
