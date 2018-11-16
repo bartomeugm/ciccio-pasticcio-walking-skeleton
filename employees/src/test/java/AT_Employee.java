@@ -1,15 +1,21 @@
 import com.eclipsesource.json.Json;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class AT_Employee {
 
+    ApplicationService applicationService = mock(ApplicationService.class);
+
     @BeforeEach
     void setUp() {
-        new EmployeeManagementService().startOn(8080);
+        new EmployeeManagementService(applicationService).startOn(8080);
     }
 
     @Test
@@ -32,6 +38,8 @@ public class AT_Employee {
                 .add("notes", "")
                 .toString();
 
+        when(applicationService.addEmployee(any())).thenReturn(new EmployeeID(4321));
+
         given()
                 .contentType("application/json")
                 .body(jsonBody)
@@ -40,6 +48,6 @@ public class AT_Employee {
         .then()
                 .statusCode(201)
                 .contentType("application/json")
-                .body("uri", equalTo("/employees/1234"));
+                .body("uri", equalTo("/employees/4321"));
     }
 }

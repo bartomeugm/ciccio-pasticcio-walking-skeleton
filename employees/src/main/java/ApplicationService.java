@@ -1,5 +1,5 @@
 public class ApplicationService {
-    public void addEmployee(Object o) {
+    public EmployeeID addEmployee(Object o) {
         throw new IllegalArgumentException();
     }
 }
