@@ -1,5 +1,5 @@
 public class ApplicationService {
-    public EmployeeID addEmployee(Object o) {
+    public EmployeeID addEmployee(EmployeeDTO o) {
         throw new IllegalArgumentException();
     }
 }
