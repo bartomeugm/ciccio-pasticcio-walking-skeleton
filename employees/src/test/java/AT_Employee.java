@@ -3,11 +3,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
-public class AcceptanceTest {
-
-    // Create an employee
-
+public class AT_Employee {
 
     @BeforeEach
     void setUp() {
@@ -37,9 +35,10 @@ public class AcceptanceTest {
         given()
                 .contentType("application/json")
                 .body(jsonBody)
-                .when()
+        .when()
                 .post("/employees")
-                .then()
-                .statusCode(201);
+        .then()
+                .statusCode(201)
+                .body("uri", equalTo("/employees/1234"));
     }
 }
