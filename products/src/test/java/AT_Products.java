@@ -12,7 +12,11 @@ public class AT_Products {
 
     @BeforeAll
     static void setUp() {
-        new ProductManagementService(new ProductController(new ApplicationService())).startOn(8080);
+        ApplicationService applicationService = new ApplicationService(new ProductRepository());
+        ProductController productController = new ProductController(applicationService);
+        ProductManagementService productManagementService = new ProductManagementService(productController);
+
+        productManagementService.startOn(8080);
     }
 
     @Test

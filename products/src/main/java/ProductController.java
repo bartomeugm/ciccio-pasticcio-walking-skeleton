@@ -15,8 +15,9 @@ public class ProductController {
         res.status(200);
         res.type("application/json");
 
-        ProductId productId = new ProductId(Integer.valueOf(req.queryParams("id")));
+        ProductId productId = new ProductId(Integer.valueOf(req.params("id")));
         ProductDTO productDTO = applicationService.getProductById(productId);
+
         JsonObject jsonObject = Json.object()
                 .add("name", productDTO.getName())
                 .add("price", productDTO.getPrice())
