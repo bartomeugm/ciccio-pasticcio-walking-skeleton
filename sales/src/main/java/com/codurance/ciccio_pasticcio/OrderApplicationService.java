@@ -13,11 +13,13 @@ public class OrderApplicationService {
         this.customerRepository = customerRepository;
     }
 
-    public UUID createOrder(Order order) throws CustomerNotExistsException {
-        CustomerID customerID = order.customerId;
+    public UUID createOrder(OrderRequest orderRequest) throws CustomerNotExistsException {
+        CustomerID customerID = orderRequest.customerId;
         boolean customerExists = customerRepository.doesCustomerExists(customerID);
-        if(!customerExists) throw new CustomerNotExistsException();
+        if (!customerExists) throw new CustomerNotExistsException();
 
+
+        Order order = Order.from(orderRequest);
         orderValidator.validate(order);
         return orderRepository.insertOrder(order).identifier;
     }

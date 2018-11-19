@@ -34,11 +34,13 @@ public class AnOrderIsCreatedFeature {
                 "USA",
                 true);
 
-        Order order = new Order(employeeId, customerId, shippingDetails, products);
+        OrderRequest orderRequest = new OrderRequest(employeeId, customerId, shippingDetails, products);
+        Order order = Order.from(orderRequest);
+
         OrderValidator orderValidator = new OrderValidator(warehouse, catalog);
 
         OrderApplicationService orderApplicationService = new OrderApplicationService(orderRepository, orderValidator, customerRepository);
-        orderApplicationService.createOrder(order);
+        orderApplicationService.createOrder(orderRequest);
 
         verify(orderValidator).validate(order);
         verify(orderRepository).insertOrder(order);

@@ -43,14 +43,14 @@ public class OrderControllerShould {
         UUID orderUuid = UUID.randomUUID();
         expectedMessage.setMensaje("/orders/" + orderUuid);
         Products products = new Products(itemList);
-        Order order = new Order(employeeId, customerId, shippingDetails, products);
-        when(orderApplicationService.createOrder(order)).thenReturn(orderUuid);
+        OrderRequest orderRequest = new OrderRequest(employeeId, customerId, shippingDetails, products);
+        when(orderApplicationService.createOrder(orderRequest)).thenReturn(orderUuid);
 
         Message actualMessage = orderController.createOrder(request, response);
 
         verify(response).status(201);
         verify(response).type("application/json");
-        verify(orderApplicationService).createOrder(order);
+        verify(orderApplicationService).createOrder(orderRequest);
         assertEquals(expectedMessage, actualMessage);
     }
 

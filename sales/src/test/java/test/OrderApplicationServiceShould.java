@@ -35,11 +35,33 @@ public class OrderApplicationServiceShould {
         makeCustomerExist();
         Order order = insertOrder(getOrder()).entity;
 
-        orderApplicationService.createOrder(order);
+        OrderRequest orderRequest = getOrderRequest();
+        orderApplicationService.createOrder(orderRequest);
 
         InOrder inOrderVerification = inOrder(orderValidator, orderRepository);
         inOrderVerification.verify(orderValidator).validate(order);
         inOrderVerification.verify(orderRepository).insertOrder(order);
+    }
+
+    private OrderRequest getOrderRequest() {
+        CustomerID customerId = new CustomerID(1234);
+        Item item = new Item(1234);
+        List<Item> itemList = new ArrayList<Item>() {{
+            add(item);
+        }};
+        Products products = new Products(itemList);
+        EmployeeID employeeId = new EmployeeID(123);
+        ShippingDetails shippingDetails = new ShippingDetails(
+                "Homer Simpson",
+                "472, Evergreen terrace",
+                "Springfield",
+                "Oregon",
+                "1234",
+                "USA",
+                true);
+
+        OrderRequest orderRequest = new OrderRequest(employeeId, customerId, shippingDetails, products);
+        return orderRequest;
     }
 
     @Test
@@ -47,7 +69,8 @@ public class OrderApplicationServiceShould {
         makeCustomerExist();
         Persistable<Order> persistableOrder = insertOrder(getOrder());
 
-        UUID id = orderApplicationService.createOrder(persistableOrder.entity);
+        OrderRequest orderRequest = getOrderRequest();
+        UUID id = orderApplicationService.createOrder(orderRequest);
 
         assertEquals(persistableOrder.identifier, id);
     }
@@ -57,7 +80,7 @@ public class OrderApplicationServiceShould {
     }
 
     private Persistable<Order> insertOrder(Order entity) {
-        Persistable<Order> persistableOrder =Persistable.of(entity);
+        Persistable<Order> persistableOrder = Persistable.of(entity);
         when(orderRepository.insertOrder(entity)).thenReturn(persistableOrder);
         return persistableOrder;
     }
@@ -79,7 +102,7 @@ public class OrderApplicationServiceShould {
                 "USA",
                 true);
 
-        Order order = new Order(employeeId, customerId, shippingDetails, products);
+        Order order = new Order(employeeId, customerId, shippingDetails, products, new OrderID());
         return order;
     }
 }

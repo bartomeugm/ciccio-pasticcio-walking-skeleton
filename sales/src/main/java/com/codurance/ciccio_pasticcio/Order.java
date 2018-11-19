@@ -1,19 +1,24 @@
 package com.codurance.ciccio_pasticcio;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Order {
     public final EmployeeID employeeId;
     public final CustomerID customerId;
     public final ShippingDetails shippingDetails;
     public final Products products;
+    private final OrderID id;
 
-    public Order(EmployeeID employeeId, CustomerID customerId, ShippingDetails shippingDetails, Products products) {
+    public Order(EmployeeID employeeId, CustomerID customerId, ShippingDetails shippingDetails, Products products, OrderID id) {
+        this.id = id;
         this.employeeId = employeeId;
         this.customerId = customerId;
         this.shippingDetails = shippingDetails;
         this.products = products;
+    }
+
+    public static Order from(OrderRequest request) {
+        return new Order(request.employeeId, request.customerId, request.shippingDetails, request.products, new OrderID());
     }
 
     @Override

@@ -41,14 +41,14 @@ public class OrderController {
         }
 
         Products products = new Products(itemList);
-        Order order = new Order(employeeId, customerId, shippingDetails, products);
+        OrderRequest orderRequest = new OrderRequest(employeeId, customerId, shippingDetails, products);
 
         UUID orderUuid = null;
         Message message = new Message();
         try {
             res.status(201);
             res.type("application/json");
-            orderUuid = orderApplicationService.createOrder(order);
+            orderUuid = orderApplicationService.createOrder(orderRequest);
             message.setMensaje("/orders/" + orderUuid);
             return message;
         } catch (CustomerNotExistsException e) {
