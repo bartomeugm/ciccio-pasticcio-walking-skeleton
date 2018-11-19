@@ -1,9 +1,9 @@
 package com.codurance.ciccio_pasticcio;
 
-import com.eclipsesource.json.Json;
 import com.google.gson.Gson;
 import spark.Spark;
 
+import static spark.Spark.exception;
 import static spark.Spark.post;
 
 public class Application {
@@ -12,6 +12,11 @@ public class Application {
         setPort();
         post("/orders", (req, res) -> orderController.createOrder(req, res)
         );
+
+        exception(CustomerNotExistsException.class, (exception, request, response) -> {
+            response.status(500);
+            response.body("User not found");
+        });
     }
 
     private static void setPort() {

@@ -5,6 +5,10 @@ import java.util.Objects;
 public class Message {
     private String url;
 
+    public Message(String url) {
+        this.url = url;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -16,16 +20,5 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(url);
-    }
-
-    public void setMensaje(String mensaje) {
-        this.url = mensaje;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "url='" + url + '\'' +
-                '}';
     }
 }

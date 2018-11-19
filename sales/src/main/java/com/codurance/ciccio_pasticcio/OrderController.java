@@ -20,7 +20,26 @@ public class OrderController {
         this.orderApplicationService = orderApplicationService;
     }
 
-    public Message createOrder(Request req, Response res) {
+    public Message createOrder(Request req, Response res) throws CustomerNotExistsException {
+        OrderRequest orderRequest = parseCreateOrderDTO(req);
+        UUID orderUuid = orderApplicationService.createOrder(orderRequest);
+
+        return response(created("/orders/" + orderUuid), res);
+
+    }
+
+    private Message response(Message message, Response res) {
+        res.status(HttpStatus.CREATED_201);
+        res.type("application/json");
+        return message;
+    }
+
+    private Message created(String url) {
+        return new Message(url);
+    }
+
+
+    private OrderRequest parseCreateOrderDTO(Request req) {
         JsonObject requestBody = Json.parse(req.body()).asObject();
         JsonArray requestedProducts = requestBody.get("products").asArray();
         EmployeeID employeeId = new EmployeeID(requestBody.get("employee_id").asInt());
@@ -41,22 +60,6 @@ public class OrderController {
         }
 
         Products products = new Products(itemList);
-        OrderRequest orderRequest = new OrderRequest(employeeId, customerId, shippingDetails, products);
-
-        UUID orderUuid = null;
-        Message message = new Message();
-        try {
-            res.status(201);
-            res.type("application/json");
-            orderUuid = orderApplicationService.createOrder(orderRequest);
-            message.setMensaje("/orders/" + orderUuid);
-            return message;
-        } catch (CustomerNotExistsException e) {
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR_500);
-            res.type("text/plain");
-            res.body("CustomerNotExistsException");
-        }
-
-        return message;
+        return new OrderRequest(employeeId, customerId, shippingDetails, products);
     }
 }

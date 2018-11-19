@@ -39,9 +39,8 @@ public class OrderControllerShould {
             add(new Item(1234));
             add(new Item(5678));
         }};
-        Message expectedMessage = new Message();
         UUID orderUuid = UUID.randomUUID();
-        expectedMessage.setMensaje("/orders/" + orderUuid);
+        Message expectedMessage = new Message("/orders/" + orderUuid);
         Products products = new Products(itemList);
         OrderRequest orderRequest = new OrderRequest(employeeId, customerId, shippingDetails, products);
         when(orderApplicationService.createOrder(orderRequest)).thenReturn(orderUuid);
