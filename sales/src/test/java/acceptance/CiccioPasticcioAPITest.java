@@ -1,9 +1,11 @@
 package acceptance;
 
 import com.codurance.ciccio_pasticcio.Application;
+import com.codurance.ciccio_pasticcio.LondonCustomerRepository;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;

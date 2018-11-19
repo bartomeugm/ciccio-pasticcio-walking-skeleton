@@ -1,14 +1,24 @@
 package com.codurance.ciccio_pasticcio;
 
+import java.util.UUID;
+
 public class OrderApplicationService {
-    public OrderApplicationService(Repository repository, OrderValidator orderValidator, CustomerRepository customerRepository) {
+    private final Repository orderRepository;
+    private final OrderValidator orderValidator;
+    private final CustomerRepository customerRepository;
+
+    public OrderApplicationService(Repository orderRepository, OrderValidator orderValidator, CustomerRepository customerRepository) {
+        this.orderRepository = orderRepository;
+        this.orderValidator = orderValidator;
+        this.customerRepository = customerRepository;
     }
 
-    public String sayHello() {
-        return "Hello";
-    }
+    public UUID createOrder(Order order) throws CustomerNotExistsException {
+        CustomerID customerID = order.customerId;
+        boolean customerExists = customerRepository.doesCustomerExists(customerID);
+        if(!customerExists) throw new CustomerNotExistsException();
 
-    public int createOrder(Order order) {
-        throw new UnsupportedOperationException();
+        orderValidator.validate(order);
+        return orderRepository.insertOrder(order).identifier;
     }
 }

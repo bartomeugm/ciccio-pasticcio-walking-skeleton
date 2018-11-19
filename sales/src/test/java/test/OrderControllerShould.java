@@ -9,6 +9,7 @@ import spark.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.*;
 public class OrderControllerShould {
 
     @Test
-    public void create_an_order_and_return_order_url() {
+    public void create_an_order_and_return_order_url() throws CustomerNotExistsException {
         OrderApplicationService orderApplicationService = mock(OrderApplicationService.class);
         OrderController orderController = new OrderController(orderApplicationService);
         Request request = mock(Request.class);
@@ -39,13 +40,13 @@ public class OrderControllerShould {
             add(new Item(5678));
         }};
         Message expectedMessage = new Message();
-        expectedMessage.setMensaje("/orders/1");
+        UUID orderUuid = UUID.randomUUID();
+        expectedMessage.setMensaje("/orders/" + orderUuid);
         Products products = new Products(itemList);
         Order order = new Order(employeeId, customerId, shippingDetails, products);
-        when(orderApplicationService.createOrder(order)).thenReturn(1);
+        when(orderApplicationService.createOrder(order)).thenReturn(orderUuid);
 
         Message actualMessage = orderController.createOrder(request, response);
-
 
         verify(response).status(201);
         verify(response).type("application/json");

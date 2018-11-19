@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class AnOrderIsCreatedFeature {
     @Test
     @Ignore
-    public void an_order_is_created_when_it_is_valid() {
+    public void an_order_is_created_when_it_is_valid() throws CustomerNotExistsException {
         Repository orderRepository = mock(OrderRepository.class);
         Warehouse warehouse = mock(LondonWarehouse.class);
         CustomerRepository customerRepository = mock(LondonCustomerRepository.class);
@@ -35,7 +35,7 @@ public class AnOrderIsCreatedFeature {
                 true);
 
         Order order = new Order(employeeId, customerId, shippingDetails, products);
-        OrderValidator orderValidator = new OrderValidator(warehouse, catalog, customerRepository);
+        OrderValidator orderValidator = new OrderValidator(warehouse, catalog);
 
         OrderApplicationService orderApplicationService = new OrderApplicationService(orderRepository, orderValidator, customerRepository);
         orderApplicationService.createOrder(order);

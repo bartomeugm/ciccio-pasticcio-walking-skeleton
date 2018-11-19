@@ -4,11 +4,13 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
+import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class OrderController {
 
@@ -41,12 +43,20 @@ public class OrderController {
         Products products = new Products(itemList);
         Order order = new Order(employeeId, customerId, shippingDetails, products);
 
-        int orderNumber = orderApplicationService.createOrder(order);
-
-        res.status(201);
-        res.type("application/json");
+        UUID orderUuid = null;
         Message message = new Message();
-        message.setMensaje("/orders/" + orderNumber);
+        try {
+            res.status(201);
+            res.type("application/json");
+            orderUuid = orderApplicationService.createOrder(order);
+            message.setMensaje("/orders/" + orderUuid);
+            return message;
+        } catch (CustomerNotExistsException e) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR_500);
+            res.type("text/plain");
+            res.body("CustomerNotExistsException");
+        }
+
         return message;
     }
 }
