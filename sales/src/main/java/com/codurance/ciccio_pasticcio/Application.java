@@ -10,11 +10,7 @@ public class Application {
     public static void main(String... args) {
         OrderController orderController = ControllerFactory.orderController();
         setPort();
-        post("/orders", (req, res) -> {
-                    res.status(201);
-                    res.type("application/json");
-                    return Json.object().add("url", "/orders/1");
-                }
+        post("/orders", (req, res) -> orderController.createOrder(req, res)
         );
     }
 

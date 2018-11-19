@@ -8,7 +8,7 @@ public class OrderApplicationService {
         return "Hello";
     }
 
-    public void createOrder(Order order) {
+    public int createOrder(Order order) {
         throw new UnsupportedOperationException();
     }
 }
