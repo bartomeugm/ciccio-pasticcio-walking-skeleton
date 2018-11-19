@@ -1,5 +1,6 @@
 import spark.Spark;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 
 
@@ -16,5 +17,7 @@ public class ProductManagementService {
         get("/products/:id", (req, res) -> {
             return productController.getProductById(req, res);
         });
+        exception(UnsupportedOperationException.class,
+                (ex, req, res) -> { ex.printStackTrace(); });
     }
 }
