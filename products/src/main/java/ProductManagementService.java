@@ -17,7 +17,7 @@ public class ProductManagementService {
         get("/products/:id", (req, res) -> {
             return productController.getProductById(req, res);
         });
-        exception(UnsupportedOperationException.class,
+        exception(Exception.class,
                 (ex, req, res) -> { ex.printStackTrace(); });
     }
 }
