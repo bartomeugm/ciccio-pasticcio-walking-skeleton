@@ -4,8 +4,17 @@ import static spark.Spark.get;
 
 
 public class ProductManagementService {
+    private ProductController productController;
+
+    public ProductManagementService(ProductController productController) {
+
+        this.productController = productController;
+    }
+
     public void startOn(int port) {
         Spark.port(port);
-        get("/products/10001", (req, res) -> "");
+        get("/products/:id", (req, res) -> {
+            return productController.getProductById(req, res);
+        });
     }
 }

@@ -10,11 +10,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class AT_Products {
 
-    private ApplicationService applicationService;
-
     @BeforeAll
     static void setUp() {
-        new ProductManagementService(applicationService).startOn(8080);
+        new ProductManagementService(new ProductController(new ApplicationService())).startOn(8080);
     }
 
     @Test
