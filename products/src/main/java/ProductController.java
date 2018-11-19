@@ -21,7 +21,7 @@ public class ProductController {
         JsonObject jsonObject = Json.object()
                 .add("name", productDTO.getName())
                 .add("price", productDTO.getPrice())
-                .add("discontinued", productDTO.discontinued());
+                .add("discontinued", productDTO.status() == ProductStatus.DISCONTINUED);
 
         return jsonObject.toString();
     }

@@ -13,6 +13,6 @@ public class ApplicationService {
     public ProductDTO getProductById(ProductId productId) {
         Optional<Product> productOptional = productRepository.findProduct(productId);
         Product product = productOptional.get();
-        return new ProductDTO(product.getName(), product.getPrice(), product.discontinued());
+        return new ProductDTO(product.getName(), product.getPrice(), product.status());
     }
 }

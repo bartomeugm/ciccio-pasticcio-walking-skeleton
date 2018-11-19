@@ -1,9 +1,6 @@
 import com.eclipsesource.json.Json;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import spark.Request;
 import spark.Response;
 
@@ -30,7 +27,7 @@ public class ProductControllerShould {
 
         when(req.params("id")).thenReturn("10001");
 
-        ProductDTO foundProduct = new ProductDTO("Pasticcio", 5.00, true);
+        ProductDTO foundProduct = new ProductDTO("Pasticcio", 5.00, ProductStatus.DISCONTINUED);
 
         when(appService.getProductById(new ProductId(10001))).thenReturn(foundProduct);
 
@@ -48,7 +45,7 @@ public class ProductControllerShould {
         return Json.object()
                 .add("name", productDTO.getName())
                 .add("price", productDTO.getPrice())
-                .add("discontinued", productDTO.discontinued())
+                .add("discontinued", productDTO.status() == ProductStatus.DISCONTINUED)
                 .toString();
     }
 }

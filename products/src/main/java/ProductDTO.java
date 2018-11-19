@@ -4,12 +4,12 @@ public class ProductDTO {
 
     private final String name;
     private final double price;
-    private final boolean discontinued;
+    private final ProductStatus status;
 
-    public ProductDTO(String name, double price, boolean discontinued) {
+    public ProductDTO(String name, double price, ProductStatus status) {
         this.name = name;
         this.price = price;
-        this.discontinued = discontinued;
+        this.status = status;
     }
     public String getName() {
         return name;
@@ -19,8 +19,8 @@ public class ProductDTO {
         return price;
     }
 
-    public boolean discontinued() {
-        return discontinued;
+    public ProductStatus status() {
+        return status;
     }
 
     @Override
@@ -29,12 +29,12 @@ public class ProductDTO {
         if (o == null || getClass() != o.getClass()) return false;
         ProductDTO that = (ProductDTO) o;
         return Double.compare(that.price, price) == 0 &&
-                discontinued == that.discontinued &&
+                status == that.status &&
                 Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price, discontinued);
+        return Objects.hash(name, price, status);
     }
 }

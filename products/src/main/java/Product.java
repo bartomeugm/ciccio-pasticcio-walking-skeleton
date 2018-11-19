@@ -1,4 +1,15 @@
 public class Product{
+    private final String name;
+
+    private final double price;
+    private final ProductStatus status;
+
+    public Product(String name, double price, ProductStatus status) {
+        this.name = name;
+        this.price = price;
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }
@@ -7,19 +18,8 @@ public class Product{
         return price;
     }
 
-    public boolean discontinued() {
-        return discontinued;
-    }
-
-    private final String name;
-    private final double price;
-    private final boolean discontinued;
-
-
-    public Product(String name, double price, boolean discontinued) {
-        this.name = name;
-        this.price = price;
-        this.discontinued = discontinued;
+    public ProductStatus status() {
+        return status;
     }
 
 }
